@@ -1,6 +1,18 @@
 import { normalize, schema, denormalize, Schema } from "normalizr";
 
 function denormalizeWithType<T>(
+  result: string,
+  schema: Schema<T>,
+  entities: any
+): T
+
+function denormalizeWithType<T>(
+  result: string[],
+  schema: Schema<T>,
+  entities: any
+): T[]
+
+function denormalizeWithType<T>(
   result: string | string[],
   schema: Schema<T>,
   entities: any
