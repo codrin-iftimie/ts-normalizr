@@ -1,16 +1,16 @@
-import { normalize, schema, denormalize, Schema } from "normalizr";
+import { normalize, schema as schemaDefinition, denormalize, Schema } from "normalizr";
 
 function denormalizeWithType<T>(
   result: string,
   schema: Schema<T>,
   entities: any
-): T
+): T;
 
 function denormalizeWithType<T>(
   result: string[],
   schema: Schema<T>,
   entities: any
-): T[]
+): T[];
 
 function denormalizeWithType<T>(
   result: string | string[],
@@ -20,8 +20,14 @@ function denormalizeWithType<T>(
   return denormalize(result, schema, entities);
 }
 
-function normalizeWithType<T>(data:any, schema: Schema<T>) {
-  return normalize(data, schema)
+function normalizeWithType<T>(data: any, schema: Schema<T>) {
+  return normalize(data, schema);
 }
 
-export default { normalize: normalizeWithType, schema, denormalize: denormalizeWithType };
+export namespace normalizr {
+  export const normalize = normalizeWithType;
+  export const schema = schemaDefinition;
+  export const denormalize = denormalizeWithType;
+}
+
+export default normalizr;
