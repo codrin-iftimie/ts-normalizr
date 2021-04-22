@@ -1,29 +1,34 @@
-import { schema } from "normalizr";
-
-export interface IUser {
+import normalizr from "./normalizr"
+export interface User {
   id: string,
   name: string
 }
 
-interface IComment {
+interface Comment {
   id: string,
-  commenter: IUser
+  commenter: User
 }
 
-export interface IPost {
+export interface Post {
   id: string,
   title: string,
-  comments: IComment[],
-  author: IUser
+  comments: Comment[],
+  author: User
 }
 
-const UserSchema = new schema.Entity<IUser>('users');
+export interface EntityMaps {
+  post: Post,
+  user: User,
+  comment: Comment
+}
 
-const CommentSchema = new schema.Entity<IComment>('comments', {
+const UserSchema = new normalizr.schema.Entity<User>('users');
+
+const CommentSchema = new normalizr.schema.Entity<Comment>('comments', {
   commenter: UserSchema
 });
 
-export const ArticleSchema = new schema.Entity<IPost>('articles', {
+export const ArticleSchema = new normalizr.schema.Entity<Post>('articles', {
   author: UserSchema,
   comments: [CommentSchema]
 });
