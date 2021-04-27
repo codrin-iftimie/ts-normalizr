@@ -3,12 +3,13 @@ import {
   schema as schemaDefinition,
   denormalize,
   Schema,
+  SchemaArray,
 } from "normalizr";
 import { EntityMaps } from "./types";
 
 type EntitiesShape = {
   [k in keyof EntityMaps]: {
-    [id in string]: EntityMaps[k];
+    [id: string]: EntityMaps[k];
   };
 };
 
@@ -20,40 +21,40 @@ function denormalizeWithType<T>(
 
 function denormalizeWithType<T>(
   result: string[],
-  schema: Schema<T>,
+  schema: SchemaArray<T>,
   entities: EntitiesShape
 ): T[];
 
 function denormalizeWithType<T>(
   result: string | string[],
-  schema: Schema<T>,
+  schema: Schema<T> | SchemaArray<T>,
   entities: EntitiesShape
-): T {
+): T | T[] {
   return denormalize(result, schema, entities);
 }
 
 
 function normalizeWithType<T>(
-  data: any[],
-  schema: Schema<T>
+  data: T[],
+  schema: SchemaArray<T>
 ): { result: string[]; entities: EntitiesShape }
 
 function normalizeWithType<T>(
-  data: any,
+  data: T,
   schema: Schema<T>
 ): { result: string; entities: EntitiesShape }
 
 
 function normalizeWithType<T>(
-  data: any | any[],
-  schema: Schema<T>
+  data: T | T[],
+  schema: Schema<T> | SchemaArray<T>
 ): { result: string | string[]; entities: EntitiesShape } {
   return normalize(data, schema);
 }
 
 export namespace normalizr {
   export const normalize = normalizeWithType;
-  export const schema = { ...schemaDefinition };
+  export const schema = schemaDefinition;
   export const denormalize = denormalizeWithType;
 }
 

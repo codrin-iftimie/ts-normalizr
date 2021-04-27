@@ -1,6 +1,7 @@
 import normalizr from './normalizr';
-import {Post, ArticleSchema} from "./types"
+import {Post, ArticleSchema, CommentSchema} from "./types"
 
+// We dont event have to know what kind of data we are dealing with
 const originalData:Post = {
   "id": "123",
   "author": {

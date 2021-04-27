@@ -24,7 +24,7 @@ export interface EntityMaps {
 
 const UserSchema = new normalizr.schema.Entity<User>('users');
 
-const CommentSchema = new normalizr.schema.Entity<Comment>('comments', {
+export const CommentSchema = new normalizr.schema.Entity<Comment>('comments', {
   commenter: UserSchema
 });
 
